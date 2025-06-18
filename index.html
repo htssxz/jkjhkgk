@@ -1,97 +1,76 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Jogos Atuais</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loja de Placas de Vídeo Temáticas</title>
   <style>
-    :root {
-      --primary-color: #a8dadc;
-      --bg-color: #f1faee;
-      --text-color: #1d3557;
-      --card-color: #ffffff;
-      --shadow-color: rgba(0, 0, 0, 0.1);
-    }
-
     body {
+      background-color: #111;
+      color: white;
+      font-family: Arial, sans-serif;
       margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-    }
-
-    header {
-      background-color: var(--primary-color);
-      padding: 20px;
+      padding: 0;
       text-align: center;
     }
-
-    header h1 {
-      margin: 0;
-    }
-
-    .container {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      padding: 30px;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-
-    .card {
-      background-color: var(--card-color);
+    h1 {
       padding: 20px;
+    }
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 20px;
+    }
+    .card {
+      background-color: #1c1c1c;
       border-radius: 10px;
-      box-shadow: 0 2px 8px var(--shadow-color);
+      padding: 10px;
+      width: 320px;
       transition: transform 0.3s ease;
     }
-
     .card:hover {
-      transform: scale(1.03);
+      transform: scale(1.05);
     }
-
     .card img {
       width: 100%;
-      border-radius: 8px;
+      border-radius: 10px;
     }
-
-    .card h3 {
-      margin-top: 15px;
+    .label {
+      margin-top: 10px;
+      font-size: 18px;
+      color: #ccc;
     }
-
-    footer {
-      background-color: var(--primary-color);
-      text-align: center;
-      padding: 10px;
-      color: #fff;
+    a {
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
+  <h1>Loja de Placas de Vídeo Temáticas</h1>
 
-  <header>
-    <h1>Jogos Atuais em Destaque</h1>
-  </header>
+  <div class="gallery">
+    <a href="https://www.palmeiras.com.br/" target="_blank">
+      <div class="card">
+        <img src="A_graphics_card_inspired_by_the_DC_Comics_superher.png" alt="Placa Batman">
+        <div class="label">RTX KO - Batman Edition</div>
+      </div>
+    </a>
 
-  <main class="container">
-    <div class="card">
-      <img src="https://upload.wikimedia.org/wikipedia/en/5/5e/Fortnite_cover.jpg" alt="Fortnite">
-      <h3>Fortnite</h3>
-      <p>Battle Royale com atualizações constantes e eventos épicos ao vivo.</p>
-    </div>
+    <a href="https://youtube.com/@htssxz?si=WNFm70i02NXyPP6q" target="_blank">
+      <div class="card">
+        <img src="A_graphics_card_in_the_NVIDIA_GeForce_RTX_series,_.png" alt="Placa John Wick">
+        <div class="label">RTX 4090 - John Wick Edition</div>
+      </div>
+    </a>
 
-    <div class="card">
-      <img src="https://upload.wikimedia.org/wikipedia/en/0/0f/Call_of_Duty_Modern_Warfare_III_2023_cover.jpg" alt="COD MW3">
-      <h3>Call of Duty: MW3</h3>
-      <p>Ação intensa com multiplayer competitivo e campanhas cinematográficas.</p>
-    </div>
-
-    <div class="card">
-      <img src="https://upload.wikimedia.org/wikipedia/en/e/e3/Minecraft_Cover_Art.png" alt="Minecraft">
-      <h3>Minecraft</h3>
-      <p>Exploração e criatividade ilimitadas com modos de sobrevivência e construção.</p>
-    </div>
-  </main>
-
-  <foo
+    <a href="https://www.palmeiras.com.br/craques/cleber/" target="_blank">
+      <div class="card">
+        <img src="A_graphics_card_inspired_by_samurai_and_sakura_(ch.png" alt="Placa Samurai">
+        <div class="label">RTX Aorus - Samurai Sakura Edition</div>
+      </div>
+    </a>
+  </div>
+</body>
+</html>
