@@ -39,7 +39,7 @@
       font-size: 24px;
       margin-bottom: 20px;
     }
-    select, button {
+    select, button, input {
       font-size: 18px;
       padding: 10px;
       margin: 10px;
@@ -62,6 +62,35 @@
       border-radius: 10px;
       color: #070;
     }
+    .roleta {
+      margin: 20px;
+      font-size: 24px;
+      background: #fff;
+      padding: 10px;
+      border-radius: 10px;
+      width: 300px;
+      text-align: center;
+    }
+    .banco {
+      position: fixed;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #000;
+      color: #0f0;
+      padding: 10px 20px;
+      border-radius: 10px;
+      font-size: 18px;
+    }
+    .recarga {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      background: #fff;
+      padding: 10px;
+      border-radius: 10px;
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -81,27 +110,70 @@
       <option>Botafogo</option>
       <option>Vasco</option>
     </select>
-    <button onclick="sortearVencedor()">Apostar!</button>
-    <div id="resultado" class="result"></div>
+    <button onclick="apostar()" id="botaoAposta">Apostar!</button>
+    <div class="roleta" id="roleta">🌀 A roleta está pronta...</div>
+    <div class="result" id="resultado"></div>
+  </div>
+
+  <div class="banco" id="banco">Saldo: R$ 100</div>
+
+  <div class="recarga" id="recarga">
+    <p>Digite o valor para recarregar:</p>
+    <input type="number" id="valorRecarga" min="1" />
+    <button onclick="recarregar()">Recarregar</button>
   </div>
 
   <script>
     const times = [
-      "Palmeiras",
-      "Flamengo",
-      "Corinthians",
-      "São Paulo",
-      "Grêmio",
-      "Atlético-MG",
-      "Internacional",
-      "Fortaleza",
-      "Botafogo",
-      "Vasco"
+      "Palmeiras", "Flamengo", "Corinthians", "São Paulo",
+      "Grêmio", "Atlético-MG", "Internacional", "Fortaleza",
+      "Botafogo", "Vasco"
     ];
 
-    function sortearVencedor() {
+    let saldo = 100;
+
+    function apostar() {
+      if (saldo <= 0) {
+        document.getElementById("roleta").textContent = "Sem saldo!";
+        document.getElementById("resultado").textContent = "Você é ruim kkk";
+        document.getElementById("botaoAposta").disabled = true;
+        document.getElementById("recarga").style.display = 'block';
+        return;
+      }
+
+      const escolhido = document.getElementById("timeEscolhido").value;
       const sorteado = times[Math.floor(Math.random() * times.length)];
-      document.getElementById("resultado").textContent = `Time vencedor: ${sorteado}`;
+
+      document.getElementById("roleta").textContent = `🎯 Rodando a roleta... caiu: ${sorteado}`;
+
+      if (escolhido === sorteado) {
+        document.getElementById("resultado").textContent = "🎉 Parabéns! Você acertou!";
+        saldo += 50;
+      } else {
+        document.getElementById("resultado").textContent = "Você errou! 😢";
+        saldo -= 25;
+        if (saldo <= 0) {
+          document.getElementById("resultado").textContent += " Você é ruim kkk";
+          document.getElementById("botaoAposta").disabled = true;
+          document.getElementById("recarga").style.display = 'block';
+        }
+      }
+      atualizarSaldo();
+    }
+
+    function atualizarSaldo() {
+      document.getElementById("banco").textContent = `Saldo: R$ ${saldo}`;
+    }
+
+    function recarregar() {
+      const valor = parseInt(document.getElementById("valorRecarga").value);
+      if (!isNaN(valor) && valor > 0) {
+        saldo += valor;
+        atualizarSaldo();
+        document.getElementById("botaoAposta").disabled = false;
+        document.getElementById("recarga").style.display = 'none';
+        document.getElementById("resultado").textContent = "Recarga feita com sucesso!";
+      }
     }
   </script>
 </body>
