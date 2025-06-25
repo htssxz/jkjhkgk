@@ -1,180 +1,366 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>GreenBet - Apostas Esportivas</title>
-  <link href="https://fonts.googleapis.com/css2?family=Lemon&display=swap" rel="stylesheet">
-  <style>
-    body {
-      margin: 0;
-      background-color: #0f3;
-      color: #000;
-      font-family: 'Lemon', cursive;
-      overflow-x: hidden;
-    }
-    .header {
-      background-color: #070;
-      padding: 20px;
-      text-align: center;
-      color: #fff;
-      font-size: 36px;
-    }
-    .idade {
-      position: fixed;
-      top: 10px;
-      left: 10px;
-      background-color: #000;
-      color: #fff;
-      padding: 5px 10px;
-      border-radius: 5px;
-      font-size: 14px;
-    }
-    .main {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 30px;
-    }
-    .question {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-    select, button, input {
-      font-size: 18px;
-      padding: 10px;
-      margin: 10px;
-      border: none;
-      border-radius: 10px;
-    }
-    button {
-      background-color: #ff0;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    button:hover {
-      background-color: #cc0;
-    }
-    .result {
-      font-size: 28px;
-      margin-top: 30px;
-      background: #fff;
-      padding: 15px;
-      border-radius: 10px;
-      color: #070;
-    }
-    .roleta {
-      margin: 20px;
-      font-size: 24px;
-      background: #fff;
-      padding: 10px;
-      border-radius: 10px;
-      width: 300px;
-      text-align: center;
-    }
-    .banco {
-      position: fixed;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #000;
-      color: #0f0;
-      padding: 10px 20px;
-      border-radius: 10px;
-      font-size: 18px;
-    }
-    .recarga {
-      position: fixed;
-      bottom: 10px;
-      right: 10px;
-      background: #fff;
-      padding: 10px;
-      border-radius: 10px;
-      display: none;
-    }
-  </style>
-</head>
-<body>
-  <div class="idade">18+</div>
-  <div class="header">GreenBet - Apostas Falsas</div>
-  <div class="main">
-    <div class="question">Qual time vai ganhar?</div>
-    <select id="timeEscolhido">
-      <option>Palmeiras</option>
-      <option>Flamengo</option>
-      <option>Corinthians</option>
-      <option>São Paulo</option>
-      <option>Grêmio</option>
-      <option>Atlético-MG</option>
-      <option>Internacional</option>
-      <option>Fortaleza</option>
-      <option>Botafogo</option>
-      <option>Vasco</option>
-    </select>
-    <button onclick="apostar()" id="botaoAposta">Apostar!</button>
-    <div class="roleta" id="roleta">🌀 A roleta está pronta...</div>
-    <div class="result" id="resultado"></div>
-  </div>
-
-  <div class="banco" id="banco">Saldo: R$ 100</div>
-
-  <div class="recarga" id="recarga">
-    <p>Digite o valor para recarregar:</p>
-    <input type="number" id="valorRecarga" min="1" />
-    <button onclick="recarregar()">Recarregar</button>
-  </div>
-
-  <script>
-    const times = [
-      "Palmeiras", "Flamengo", "Corinthians", "São Paulo",
-      "Grêmio", "Atlético-MG", "Internacional", "Fortaleza",
-      "Botafogo", "Vasco"
-    ];
-
-    let saldo = 100;
-
-    function apostar() {
-      if (saldo <= 0) {
-        document.getElementById("roleta").textContent = "Sem saldo!";
-        document.getElementById("resultado").textContent = "Você é ruim kkk";
-        document.getElementById("botaoAposta").disabled = true;
-        document.getElementById("recarga").style.display = 'block';
-        return;
-      }
-
-      const escolhido = document.getElementById("timeEscolhido").value;
-      const sorteado = times[Math.floor(Math.random() * times.length)];
-
-      document.getElementById("roleta").textContent = `🎯 Rodando a roleta... caiu: ${sorteado}`;
-
-      if (escolhido === sorteado) {
-        document.getElementById("resultado").textContent = "🎉 Parabéns! Você acertou!";
-        saldo += 50;
-      } else {
-        document.getElementById("resultado").textContent = "Você errou! 😢";
-        saldo -= 25;
-        if (saldo <= 0) {
-          document.getElementById("resultado").textContent += " Você é ruim kkk";
-          document.getElementById("botaoAposta").disabled = true;
-          document.getElementById("recarga").style.display = 'block';
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cassino Online</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1615361200141-f45040f367be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8MTF8fHxlbnwwfHx8fHw%3D&auto=format&fit=crop&w=800&q=60') no-repeat center center fixed;
+            background-size: cover;
+            color: white;
+            font-family: 'Arial', sans-serif;
         }
-      }
-      atualizarSaldo();
-    }
 
-    function atualizarSaldo() {
-      document.getElementById("banco").textContent = `Saldo: R$ ${saldo}`;
-    }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        
+        .roulette-wheel {
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            border: 20px solid #800000;
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto;
+            background: linear-gradient(90deg, #000000, #333333);
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.7);
+        }
+        
+        .roulette-number {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            transform-origin: 100% 100%;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+        }
+        
+        .roulette-pointer {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            background-color: #ff0000;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            z-index: 10;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+        }
+        
+        .bet-btn {
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        .bet-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 10px rgba(0, 0, 0, 0.4);
+        }
+        
+        .bet-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.4);
+        }
+        
+        .win-animation {
+            animation: flash 0.5s 3;
+        }
+        
+        @keyframes flash {
+            0%, 100% { background-color: initial; }
+            50% { background-color: #4CAF50; }
+        }
+        
+        .lose-animation {
+            animation: flashRed 0.5s 3;
+        }
+        
+        @keyframes flashRed {
+            0%, 100% { background-color: initial; }
+            50% { background-color: #F44336; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <div class="container mx-auto px-4 py-8 flex-1">
+        <header class="text-center mb-8">
+            <h1 class="text-5xl font-bold text-yellow-400 mb-2">Bem-vindo ao <span class="text-red-600">Golden</span> <span class="text-yellow-400">Chance</span></h1>
+            <p class="text-xl text-gray-300">O cassino digital mais confiável!</p>
+        </header>
+        
+        <div class="bg-gray-900 bg-opacity-80 rounded-lg p-6 shadow-xl max-w-5xl mx-auto">
+            <div class="flex border-b border-gray-700 mb-6">
+                <button id="roulette-tab" class="tab-btn px-6 py-3 font-medium text-lg text-yellow-400 border-b-2 border-yellow-400">Roleta Premium</button>
+                <button id="deposit-tab" class="tab-btn px-6 py-3 font-medium text-lg text-gray-400">Depósito</button>
+            </div>
+            
+            <!-- Roleta Tab -->
+            <div id="roulette-content" class="tab-content active">
+                <div class="mb-8 relative">
+                    <div class="roulette-wheel">
+                        <div class="roulette-number" style="transform: rotate(0deg); background-color: #4CAF50; color: white;">x7</div>
+                        <div class="roulette-number" style="transform: rotate(51.428deg); background-color: #F44336; color: white;">x1</div>
+                        <div class="roulette-number" style="transform: rotate(102.857deg); background-color: #4CAF50; color: white;">x3</div>
+                        <div class="roulette-number" style="transform: rotate(154.285deg); background-color: #F44336; color: white;">x1</div>
+                        <div class="roulette-number" style="transform: rotate(205.714deg); background-color: #2196F3; color: white;">x5</div>
+                        <div class="roulette-number" style="transform: rotate(257.142deg); background-color: #F44336; color: white;">x1</div>
+                        <div class="roulette-number" style="transform: rotate(308.571deg); background-color: #FFC107; color: black;">x2</div>
+                        <div class="roulette-pointer"></div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col items-center mb-6">
+                    <div class="flex items-center mb-4">
+                        <div class="bg-gray-800 rounded-lg p-4 mr-4">
+                            <h3 class="text-lg font-semibold text-yellow-400 mb-2">Saldo</h3>
+                            <div class="text-2xl font-bold" id="balance">R$ 0,00</div>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-4">
+                            <h3 class="text-lg font-semibold text-yellow-400 mb-2">Último resultado</h3>
+                            <div class="text-2xl font-bold" id="last-result">-</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6 w-full max-w-md">
+                        <label for="bet-amount" class="block text-yellow-400 text-lg mb-2">Valor da aposta (R$)</label>
+                        <input type="number" id="bet-amount" min="1" class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="10">
+                    </div>
+                    
+                    <button id="spin-btn" class="bg-red-600 hover:bg-red-700 text-white font-bold py-4 px-12 rounded-full text-xl uppercase tracking-wider transition-all duration-300 transform hover:scale-105 shadow-lg">
+                        GIRAR ROULETE
+                    </button>
+                </div>
+                
+                <div class="grid grid-cols-7 gap-2 mb-6">
+                    <button class="bet-btn bg-red-600 text-white font-bold py-3 rounded-full" data-multiplier="1">x1</button>
+                    <button class="bet-btn bg-yellow-500 text-black font-bold py-3 rounded-full" data-multiplier="2">x2</button>
+                    <button class="bet-btn bg-green-600 text-white font-bold py-3 rounded-full" data-multiplier="3">x3</button>
+                    <button class="bet-btn bg-blue-500 text-white font-bold py-3 rounded-full" data-multiplier="5">x5</button>
+                    <button class="bet-btn bg-green-600 text-white font-bold py-3 rounded-full" data-multiplier="7">x7</button>
+                </div>
+            </div>
+            
+            <!-- Deposito Tab -->
+            <div id="deposit-content" class="tab-content">
+                <div class="max-w-md mx-auto bg-gray-800 rounded-xl shadow-md overflow-hidden p-8 mb-6">
+                    <div class="text-center mb-6">
+                        <h2 class="text-2xl font-bold text-yellow-400">Recarregar Saldo</h2>
+                        <p class="text-gray-300">Adicione créditos para continuar jogando</p>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label for="deposit-amount" class="block text-yellow-400 text-lg mb-2">Valor (R$ 20-60)</label>
+                        <input type="number" id="deposit-amount" min="20" max="60" class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400" placeholder="30">
+                    </div>
+                    
+                    <div class="grid grid-cols-3 gap-4 mb-6">
+                        <button class="deposit-option bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg" data-amount="20">R$ 20</button>
+                        <button class="deposit-option bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg" data-amount="30">R$ 30</button>
+                        <button class="deposit-option bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg" data-amount="40">R$ 40</button>
+                        <button class="deposit-option bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg" data-amount="50">R$ 50</button>
+                        <button class="deposit-option bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg" data-amount="60">R$ 60</button>
+                        <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg" id="deposit-btn">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="bg-black bg-opacity-70 py-4">
+        <div class="container mx-auto px-4 text-center text-gray-400">
+            <p>© 2023 Golden Chance - APENAS PARA FINS EDUCACIONAIS</p>
+            <p class="text-xs mt-1">Este é um site simulado. Nenhuma transação financeira real ocorre.</p>
+        </div>
+    </footer>
 
-    function recarregar() {
-      const valor = parseInt(document.getElementById("valorRecarga").value);
-      if (!isNaN(valor) && valor > 0) {
-        saldo += valor;
-        atualizarSaldo();
-        document.getElementById("botaoAposta").disabled = false;
-        document.getElementById("recarga").style.display = 'none';
-        document.getElementById("resultado").textContent = "Recarga feita com sucesso!";
-      }
-    }
-  </script>
-</body>
-</html>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Variáveis do jogo
+            let balance = 0;
+            let selectedMultiplier = null;
+            let isSpinning = false;
+            
+            // Elementos da interface
+            const balanceElement = document.getElementById('balance');
+            const lastResultElement = document.getElementById('last-result');
+            const betAmountInput = document.getElementById('bet-amount');
+            const spinBtn = document.getElementById('spin-btn');
+            const depositAmountInput = document.getElementById('deposit-amount');
+            const depositBtn = document.getElementById('deposit-btn');
+            
+            // Tab system
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => {
+                        btn.classList.remove('border-yellow-400', 'text-yellow-400');
+                        btn.classList.add('text-gray-400');
+                    });
+                    
+                    tabContents.forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked button and corresponding content
+                    button.classList.add('border-yellow-400', 'text-yellow-400');
+                    button.classList.remove('text-gray-400');
+                    
+                    const tabId = button.id.replace('-tab', '-content');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Botões de multiplicador
+            document.querySelectorAll('.bet-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove seleção anterior
+                    document.querySelectorAll('.bet-btn').forEach(btn => {
+                        btn.classList.remove('ring-4', 'ring-yellow-400');
+                    });
+                    
+                    // Seleciona o novo
+                    this.classList.add('ring-4', 'ring-yellow-400');
+                    selectedMultiplier = parseInt(this.dataset.multiplier);
+                });
+            });
+            
+            // Botão de girar
+            spinBtn.addEventListener('click', function() {
+                if (isSpinning) return;
+                
+                const betAmount = parseInt(betAmountInput.value);
+                
+                // Validações
+                if (!selectedMultiplier) {
+                    alert('Selecione um multiplicador antes de girar!');
+                    return;
+                }
+                
+                if (!betAmount || betAmount < 1) {
+                    alert('Digite um valor válido para aposta!');
+                    return;
+                }
+                
+                if (betAmount > balance) {
+                    alert('Saldo insuficiente para esta aposta!');
+                    return;
+                }
+                
+                // Inicia o giro
+                isSpinning = true;
+                
+                // Aplicar efeito visual de giro
+                const wheel = document.querySelector('.roulette-wheel');
+                const numbers = wheel.querySelectorAll('.roulette-number');
+                
+                // O multiplicador real é escolhido aqui (com probabilidades pesadas)
+                const multipliers = [1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3, 3, 5, 7]; // Mais probabilidade de perder
+                const resultMultiplier = multipliers[Math.floor(Math.random() * multipliers.length)];
+
+                // Determinar o ângulo final baseado no resultado
+                const multiplierAngles = {
+                    1: 77.142,    // x1 vermelho
+                    2: 334.285,   // x2 amarelo
+                    3: 128.571,   // x3 verde
+                    5: 231.428,   // x5 azul
+                    7: 25.714     // x7 verde
+                };
+                
+                const finalAngle = multiplierAngles[resultMultiplier];
+                
+                // Animar a roleta
+                let currentRotation = 0;
+                const spins = 5; // Número de voltas completas
+                const totalRotation = spins * 360 + finalAngle;
+                const duration = 3000; // 3 segundos
+                const startTime = Date.now();
+                
+                function animateRotation() {
+                    const elapsed = Date.now() - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const easedProgress = 1 - Math.pow(1 - progress, 3); // Easing function
+                    
+                    currentRotation = easedProgress * totalRotation;
+                    wheel.style.transform = `rotate(${-currentRotation}deg)`;
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(animateRotation);
+                    } else {
+                        // Fim da animação
+                        setTimeout(() => {
+                            calculateResult(resultMultiplier, betAmount);
+                            isSpinning = false;
+                        }, 500);
+                    }
+                }
+                
+                animateRotation();
+            });
+            
+            // Função para calcular o resultado
+            function calculateResult(resultMultiplier, betAmount) {
+                let winAmount = 0;
+                let won = false;
+                
+                if (resultMultiplier === selectedMultiplier) {
+                    winAmount = betAmount * resultMultiplier;
+                    balance += winAmount;
+                    won = true;
+                } else {
+                    balance -= betAmount;
+                }
+                
+                // Atualiza UI
+                updateBalance();
+                
+                // Mostra resultado
+                if (won) {
+                    lastResultElement.textContent = `GANHOU R$ ${winAmount.toFixed(2)}`;
+                    lastResultElement.classList.add('text-green-500', 'win-animation');
+                    setTimeout(() => {
+                        lastResultElement.classList.remove('win-animation');
+                    }, 2000);
+                } else {
+                    lastResultElement.textContent = `PERDEU R$ ${betAmount.toFixed(2)}`;
+                    lastResultElement.classList.add('text-red-500', 'lose-animation');
+                    setTimeout(() => {
+                        lastResultElement.classList.remove('lose-animation');
+                    }, 2000);
+                    
+                    // Se o saldo zerar, mostra alerta
+                    if (balance <= 0) {
+                        setTimeout(() => {
+                            alert('Seu saldo zerou! Vá para a aba de depósito para recarregar.');
+                        }, 1000);
+                    }
+                }
+            }
+            
+            // Botões de valor de depósito rápido
+            document.querySelectorAll('.deposit-option').forEach(button => {
+                button.addEventListener('click', function() {
+                    depositAmountInput.value = this.dataset.amount;
+                });
+            });
+            
+            // Botão de depósito
+            depositBtn.addEventListener('click', function() {
+                const amount = parseInt(depositAmountInput.value);
+                
+                if (isNaN(amount) || amount
